@@ -10,6 +10,7 @@ app.use(express.static('images'));
 app.use(express.static('image'));
 app.use(express.static('Style'));
 app.use(express.static('javascript'));
+const port=5050;
 var result1=[];
 var result2=[];
 var con = mysql.createConnection({
@@ -61,7 +62,6 @@ router.post('/loginsubmit',function(req,res){
         res.redirect('/mainpage');
       }
       else{
-        console.log("first else");
         res.redirect('/login');
       }
     }
@@ -170,6 +170,6 @@ router.post('/adminmesssubmit',function(req,res){
   });
 
 app.use('/',router);
-app.listen(8080,()=>{
-  console.log("Running at Port 8080");
+app.listen(port,()=>{
+  console.log(`Running at Port ${port}`);
 });
