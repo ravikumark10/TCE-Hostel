@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="adminmess.css">
+        
+    </head>
+    <body ng-app="hms">
+        <header>
+            <img src="logo.PNG">
+            <h2>TCE Hostel</h2>
+        </header>
+        <section>
+            <h2>Mess Food menu</h2>
+            <center>
+                <form id="form" action="/adminmesssubmit" method="post">UPDATE FORM <br><br>
+                    <select name="day"><option>monday</option>
+                        <option>Tuesday</option>
+                        <option>Wednesday</option>
+                        <option>Thursday</option>
+                        <option>Friday</option>
+                        <option>Saturday</option>
+                        <option>Sunday</option>
+                        </select><br><br>
+                    <select name="food"><option>Breakfast</option>
+                        <option>Lunch</option>
+                        <option>Dinner</option>
+                        </select><br><br>
+                    <input name="foodname" placeholder="Enter Food name"><br><br>
+                    <button type="submit" name="submit" value="submit">Update</button>
+                </form>
+            
+           <br><br><br>
+            <div  ng-controller="breakfast as breakfast">
+                <button ng-click="breakfast.change()"> Breakfast</button>
+                <table ng-show="breakfast.value">
+                    <tr id="tablehead">
+                        <th>Day</th>
+                        <th>Breakfast</th>
+                    </tr>
+                        <tr ng-repeat="x in breakfast.food">
+                            <td>{{x.day}}</td>
+                            <td>{{x.breakfast}}</td>
+                        </tr>
+                </table>
+                <br><br>
+                
+                </div>
+            </div>
+
+            <div  ng-controller="lunch as lunch" >
+                <button ng-click="lunch.change()"> Lunch</button>
+                
+                <table ng-show="lunch.value">
+                    <tr id="tablehead">
+                        <th>Day</th>
+                        <th>Breakfast</th>
+                    </tr>
+                    <tr ng-repeat="x in lunch.food">
+                        <td>{{x.day}}</td>
+                        <td>{{x.lunch}}</td>
+                   
+                    </tr>
+                </table>
+                <br><br>
+                
+            </div>
+            <div  ng-controller="dinner as dinner">
+                <button ng-click="dinner.change()"> Dinner</button>
+                <table ng-show="dinner.value">
+                    <tr id="tablehead">
+                        <th>Day</th>
+                        <th>Breakfast</th>
+                    </tr>
+                    <tr ng-repeat="x in dinner.food">
+                        <td>{{x.day}}</td>
+                        <td>{{x.dinner}}</td>
+                   
+                    </tr>
+                </table>
+                <br><br>
+                
+            </div>
+        
+                
+        </center>
+        </section>
+
+    </body>
+    <script type="text/javascript" src="angular.min.js"></script>
+    <script type="text/javascript" src="adminmess.js"></script>
+    <script type="text/javascript" src="sample.js"></script>
+<!--- Attendance Page --->
+</html>

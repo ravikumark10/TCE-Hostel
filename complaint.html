@@ -1,0 +1,38 @@
+<!Doctype html>
+<html ng-app = 'eventApp'>
+    <meta charset="utf-8">
+    <script src="angular.min.js"></script>
+    <script src="complaint.js"></script>
+    <link rel="stylesheet" href="complaint.css">
+<head >
+    <div class="c1">
+          <link rel="stylesheet" href="main.css">  
+    </head>
+    <body>
+        <header>
+            <img src="logo.png">
+            <h2>TCE Hostel</h2>
+        </header>
+    </div>
+</head>
+<body>
+    <div class="a1">
+        <div class="a0">
+            <h4>Complaint Box</h4>
+        </div><br>
+        <form>
+            <label><b> Name:</b></label><br>
+            <input type ="text" ><br>
+            <label><b>Register Number:</b></label><br>
+            <input type ="text" ><br>
+            <label ><b>Complaint:</b></label><br>
+            <div ng-controller = 'eventController'>
+                <textarea ng-keypress="length(msg);" ng-model="msg" maxlength={{total}} cols="30" rows="5">
+                </textarea> <br>
+                ({{total-msg.length}} words only allowed)
+                {{res}}
+            </div>
+            <button class="b1"><b>Submit</b></button>
+        </form>
+    </div>
+</body>

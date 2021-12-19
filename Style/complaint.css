@@ -1,0 +1,103 @@
+
+.fit{
+    width: 100%;
+}
+ body{
+    margin:0px;
+    padding:0px;
+    background-color:white ;
+    margin: -10px;
+    }
+    h4{ 
+    margin: 0 auto; 
+    width:250px;
+    size: 5px;
+    }
+    form label{
+        text-align: left;
+        padding: 10px;
+    }
+    form input,textarea{
+        margin: 5px;
+    }
+    form textarea{
+        height: 100px;
+    }
+    .a1{
+        height: 300px;
+        text-align: left;
+        border: 3px solid #003380;
+        width:400px;
+        margin:auto;
+        padding:10px;
+        background-color: #daf0ff;
+        font-family:verdana;
+        font-size:10pt;
+        position: absolute;
+        top: 200px;
+        left: 500px;
+    }
+    .a0{
+        background-color: #003380;
+        color:cornsilk;
+        text-align: left;
+        margin:-10px;
+        height: 20px;
+        
+    }
+    .b1{
+        border:1px solid #003380;
+        margin-top: 10px;
+        margin-left: 20px;
+    }
+    .b1:hover{
+        
+        font-weight: 900;
+        background-color: #003380; 
+        color: white;
+
+    }
+    .g1{
+        height: 75px;
+        width:230px;
+    }
+    
+    form
+    {
+        height: 25px;
+    }
+    body{
+    margin: 0px;
+    padding: 0px;
+    }
+header{
+    background-color:#003380;
+    text-align: center;
+    color: whitesmoke;
+    padding: 10px;
+}
+header img{
+    height: 80px;
+    width: 80px;
+    position: absolute;
+    top: 3px;
+    left: 0px;
+}
+img{
+    height: 150px;
+    width:150px;
+}
+section div{
+    float: left;
+    padding: 50px;
+    text-align: center;
+}
+a{
+color: black;
+}
+
+#nav1{
+width: 150px;
+height: 50px;
+}
+

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="styles.css">
+<body ng-app="hms" ng-controller="homeController">
+    <header>
+        <img id="logoimg" src="logo.PNG">
+        <h1>TCE Hostel</h1>
+        <h3 >-where Quality and Ethics matter</h3>
+        <a href="/login"><button  id="loginbtn" >Login</button></a>
+    </header>
+    
+    
+    <div ng-mouseover="hovering()" ng-mouseleave="leaving()">
+        <img  class="imgcontainer" ng-src="img{{no}}.jpg">
+        <a ng-show="btns" id="prev" ng-click="changeImg(-1)">&#10094;</a>
+        <a ng-show="btns" id="next" ng-click="changeImg(1)">&#10095;</a>
+    </div>
+    
+   <br><br>
+    <section>
+        <nav>
+            <button ng-click="change(1)">Announcement</button>
+              <button ng-click="change(2)" >Admissions</button>
+              <button ng-click="change(3)">Events</button>
+          </nav>
+        <article ng-show="announcement" class= "article1"><div >Announcement Founded in 1957 by philanthropist and industrialist Late Shri.Karumuttu
+            Thiagarajan Chettiar, Thiagarajar College of Engineering (TCE) is an ISO
+            Karumattu Thiagarajan Chettior
+            Founder 9001:2008 certified institution affiliated to Anna University and situated
+            in Madurai, the Temple City.
+            <br>
+            The college is funded by Central & State Governments and Management. The courses
+            offered in TCE are approved by the All India Council for Technical Education, New Delhi.
+            TCE was granted Autonomy in the year 1987 and the programmes have been accredited
+            by the National Board of Accreditation(NBA). TCE offers 9 undergraduate programmes, 10
+            postgraduate programmes and doctoral programmes in Engineering, Science and
+            Architecture.
+            <br>
+            <h3>Our Vision</h3>
+            World class quality technical education with strong ethical values</div></article>
+        <article ng-show="admissions" class= "article1"><div >Admissions Founded in 1957 by philanthropist and industrialist Late Shri.Karumuttu
+            Thiagarajan Chettiar, Thiagarajar College of Engineering (TCE) is an ISO
+            Karumattu Thiagarajan Chettior
+            Founder 9001:2008 certified institution affiliated to Anna University and situated
+            in Madurai, the Temple City.
+            <br>
+            The college is funded by Central & State Governments and Management. The courses
+            offered in TCE are approved by the All India Council for Technical Education, New Delhi.
+            TCE was granted Autonomy in the year 1987 and the programmes have been accredited
+            by the National Board of Accreditation(NBA). TCE offers 9 undergraduate programmes, 10
+            postgraduate programmes and doctoral programmes in Engineering, Science and
+            Architecture.
+            <br>
+            <h3>Our Vision</h3>
+            World class quality technical education with strong ethical values</div></article>
+        <article ng-show="events" class= "article1"><div >Events Founded in 1957 by philanthropist and industrialist Late Shri.Karumuttu
+            Thiagarajan Chettiar, Thiagarajar College of Engineering (TCE) is an ISO
+            Karumattu Thiagarajan Chettior
+            Founder 9001:2008 certified institution affiliated to Anna University and situated
+            in Madurai, the Temple City.
+            <br>
+            The college is funded by Central & State Governments and Management. The courses
+            offered in TCE are approved by the All India Council for Technical Education, New Delhi.
+            TCE was granted Autonomy in the year 1987 and the programmes have been accredited
+            by the National Board of Accreditation(NBA). TCE offers 9 undergraduate programmes, 10
+            postgraduate programmes and doctoral programmes in Engineering, Science and
+            Architecture.
+            <br>
+            <h3>Our Vision</h3>
+            World class quality technical education with strong ethical values</div></article>
+        
+        <article id="article2">
+            <div ><h2>About us</h2>Founded in 1957 by philanthropist and industrialist Late Shri.Karumuttu
+                Thiagarajan Chettiar, Thiagarajar College of Engineering (TCE) is an ISO
+                Karumattu Thiagarajan Chettior
+                Founder 9001:2008 certified institution affiliated to Anna University and situated
+                in Madurai, the Temple City.
+                <br>
+                The college is funded by Central & State Governments and Management. The courses
+                offered in TCE are approved by the All India Council for Technical Education, New Delhi.
+                TCE was granted Autonomy in the year 1987 and the programmes have been accredited
+                by the National Board of Accreditation(NBA). TCE offers 9 undergraduate programmes, 10
+                postgraduate programmes and doctoral programmes in Engineering, Science and
+                Architecture.
+                <br>
+                <h3>Our Vision</h3>
+                World class quality technical education with strong ethical values
+                </div>
+          
+        </article>
+        
+    </section>
+    
+    <footer>
+        <center><img  src="logo.PNG"></center>
+    </footer>
+    
+</body>
+
+<script type="text/javascript" src="angular.min.js"></script>
+<script type="text/javascript" src="home.js"></script>
+</html>

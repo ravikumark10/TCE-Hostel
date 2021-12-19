@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.13",
+    "router": "^1.3.6"
+  },
+  "name": "hostel",
+  "description": "This application is about hostel management system.\r Developed by Madhavan Harish Ravikumar.",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon signup.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ravikumark10/TCE_Hostel.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ravikumark10/TCE_Hostel/issues"
+  },
+  "homepage": "https://github.com/ravikumark10/TCE_Hostel#readme"
+}

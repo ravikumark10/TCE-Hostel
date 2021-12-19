@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Main page</title>
+        <link rel="stylesheet" href="messmenu.css">
+        
+    </head>
+    <body ng-app="hms">
+        <header>
+            <img src="logo.png">
+            <h2>TCE Hostel</h2>
+        </header>
+        <center>
+        <div id="attendance" ng-controller="controller1" >
+            <student></student>
+            <input type="text" ng-model="day" placeholder="Enter Day to search">
+            <br><br>
+            <table>
+                <tr id="tablehead">
+                    <th>Day</th>
+                    <th>Breakfast</th>
+                    <th>Lunch</th>
+                    <th>Dinner</th>
+                </tr>
+                <tr ng-repeat="x in food|filter:{'day':day}">
+                    <td>{{x.day}}</td>
+                    <td>{{x.breakfast}}</td>
+                    <td>{{x.lunch}}</td>
+                    <td>{{x.dinner}}</td>
+                </tr>
+            </table>
+        </div>
+    </center>
+    </body>
+    <script type="text/javascript" src="angular.min.js"></script>
+    <script type="text/javascript" src="messmenu.js"></script>
+
+<!--- Attendance Page --->
+</html>

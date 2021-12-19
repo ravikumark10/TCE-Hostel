@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Discussion page</title>
+        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="discussion.css">
+        <script src="angular.min.js"></script>
+        <script src="Discussion.js"></script>
+    </head>
+    
+    <body ng-app="hms">
+        <header>
+            <img src="logo.png">
+            <h2>TCE Hostel</h2>
+        </header>
+        <h2>Discussion Forum</h2>
+        <section >
+            
+            <div ng-controller="discuss2 as reply">
+            </div>
+            
+                <div id="maindiv" ng-controller="discuss1 as post">
+                    <div  ng-show="post.show" ng-repeat="x in post.text" id="posteddiv">
+                        {{x.Name}}<br><br>
+                        {{x.Post}}
+                    </div><br>
+                    <input ng-keydown="$event.keyCode===13 && post.addText()" id="postinput" type="text" ng-model="post.msg" placeholder="post your comments">
+                    <button id="postbtn" ng-click="post.addText();">&#9655;</button>
+                    
+                </div>  
+       </section>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Main page</title>
+        <link rel="stylesheet" href="room.css">
+        <script src="angular.min.js"></script>
+        <script src="room.js"></script>
+        <script src="main.js"></script>
+    </head>
+    <body ng-app="myApp" ng-controller="firstCtrl">
+        <header>
+            <img src="logo.png">
+            <h2>TCE Hostel</h2>
+        </header>
+        <section ng-controller="secondCtrl">
+           <!-- <div id="nav1">
+                <span onclick="openNav()">&#9776;</span>
+            </div>-->
+            <h2>Room Allotments</h2>
+            <div>
+                <select ng-model="block">
+                    <option>A</option>
+                    <option>B</option>
+                    <option>C</option>
+                    <option>D</option>
+                    <option>E</option>
+                    <option>F</option>
+                </select>
+                <button id="block" ng-click="changeblock(block)">Choose your block</button>
+            </div>
+            <div class="room">
+                <div id="room1" ng-repeat="x in room_num" ng-if="$index < 5">
+                    <button ng-click="showroom(x)">{{block}}{{x}}</button>
+                </div>
+                <div id="room2" ng-repeat="x in room_num" ng-if="$index > 4">
+                    <button ng-click="showroom(x)">{{block}}{{x}}</button>
+                </div>
+            </div>
+            <div ng-show="display" class="allot">
+                <p>Room No:{{block}}{{btnval}}</p>
+                <div id="allot1">
+                    <button>1</button>
+                    <button>2</button>
+                </div>
+                <div id="allot2">
+                    <button>3</button>
+                    <button>4</button>
+                </div>
+                <button id="reg">Register</button>
+            </div>
+            <div class="floor">
+                <h3>{{bl}}-Block</h3>
+                <button ng-click="changefloor('2')">Second</button>
+                <button ng-click="changefloor('1')">First</button>
+                <button ng-click="changefloor('0')">Ground</button>
+                <h3>Floor:{{num}}</h3>
+            </div>
+           <!-----<div id="mySidenav" class="sidenav">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <a href="#">Home</a>
+                <a href="#">Logout</a>
+                <a href="attendance.html">Attendance</a>
+              </div>-->
+        </section>
+    </body>
+</html>

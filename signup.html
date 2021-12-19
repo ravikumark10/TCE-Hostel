@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Main page</title>
+        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="login.css">
+        <script src="main.js"></script>
+    </head>
+    <body>
+        <header>
+            <img src="logo.png">
+            <h2>TCE Hostel</h2>
+        </header>
+        <center>
+        <div>
+            <form action="/submit" method="post">
+                <input type="text" name="name" placeholder="Name"><br>
+                <input type="email" name="email" placeholder="Email"><br>
+                <input type="password" name="password" placeholder="Password"><br>
+                <input type="password" name="c_password" placeholder="Confirm Password"><br>
+                <button type="submit"  value="Submit">Signup</button><br>
+            </form>
+            <p>Already have an account?<a href="/login">Login</a></p>
+        </div>
+        </center>
+    </body>
+</html>

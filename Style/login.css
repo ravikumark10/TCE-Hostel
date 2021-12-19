@@ -1,0 +1,46 @@
+div{
+    margin-left: 400px;
+    margin-top: 200px;
+    margin-right: 350px;
+    margin-bottom: none;
+    border: 2px solid lightgray;
+    box-shadow:rgb(15, 91, 167);
+    width: 400px;
+}
+form{
+    padding: 10px;
+    margin: auto;
+}
+
+form input, select{
+    width:250px;
+    padding: 7px;
+    border: none;
+    border-bottom: 1px solid skyblue;
+    border-radius: 6px;
+    outline: none;
+    margin: 10px;
+}
+form input:hover{
+    border-bottom: 3px solid blue;
+}
+
+p{
+    text-align: center;
+    padding: 10px;
+}
+a{
+    text-decoration: none;
+    color:blue;
+}
+button{
+    border: none;
+    background-color: white;
+    color: lightslategray;
+    font-size: 17px;
+    margin-left :100px; 
+    padding-top: 25px;
+}
+button:hover{
+    color: blue;
+}
