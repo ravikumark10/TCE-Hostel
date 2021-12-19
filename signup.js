@@ -3,6 +3,8 @@ var app     = express();
 var path    = require("path");
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
+const {engine}=require('express-handlebars');
+var hbs=require('handlebars');
 const router=express.Router();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -11,6 +13,23 @@ app.use(express.static('image'));
 app.use(express.static('Style'));
 app.use(express.static('javascript'));
 const port=5050;
+const session=require('express-session');
+const { Script } = require("vm");
+
+//hbs
+app.engine('hbs', engine({extname:'.hbs'}));
+app.set('view engine','hbs');
+app.set('views','./views');
+app.use(express.static('views'));
+
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}))
+
+
 var result1=[];
 var result2=[];
 var con = mysql.createConnection({
@@ -33,10 +52,13 @@ router.get('/index',function(req,res){
 
 router.post('/submit',function(req,res){
   var name=req.body.name;
+  req.session.user_name=name;
   var email=req.body.email;
+  var dept=req.body.dept;
+  req.session.dept_name=dept;
   var password=req.body.password;
   var c_password=req.body.c_password;
-  var sql = "INSERT INTO signup (name,email,password,c_password) VALUES ('"+name+"', '"+email+"','"+password+"','"+c_password+"')";
+  var sql = "INSERT INTO signup (name,email,dept,password,c_password) VALUES ('"+name+"', '"+email+"','"+dept+"','"+password+"','"+c_password+"')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     
@@ -123,9 +145,7 @@ router.get('/dinner',function(req,res){
 router.get('/attendance',function(req,res){
   res.sendFile(path.join(__dirname+'/attendance.html'));
 })
-router.get('/Roomallotments',function(req,res){
-  res.sendFile(path.join(__dirname+'/Roomallotments.html'));
-})
+
 router.get('/messmenu',function(req,res){
   res.sendFile(path.join(__dirname+'/messmenu.html'));
 })
@@ -168,6 +188,68 @@ router.post('/adminmesssubmit',function(req,res){
     }
   });
   });
+
+router.get('/home',(req,res)=>{
+    res.render('main');
+})
+
+//Room allotments
+
+global.rooms1=[];
+router.post('/room_check',(req,res)=>{
+  var rooms=[];
+  var block=req.body.block;
+  req.session.block_name=block;
+  var floor=req.body.floor;
+  req.session.floor_name=floor;
+  if(floor=='Ground'){
+    for(var i=1;i<=10;i++){
+      rooms.push(block+'-'+i);
+    }
+  }
+  else if(floor=='First'){
+    for(var i=11;i<=20;i++){
+      rooms.push(block+'-'+i);
+    }
+  }else{
+    for(var i=21;i<=30;i++){
+      rooms.push(block+'-'+i);
+    }
+  }
+  rooms1=rooms;
+  res.redirect('/roomallotments');
+  console.log(rooms1);
+})
+
+global.room_num=[];
+global.room_name="";
+router.post('/room_select',(req,res)=>{
+  var rooms=[1,2,3,4];
+  var room=req.body.room;
+  req.session.room_name=room;
+  room_num=rooms;
+  room_name=room;
+  res.redirect('/roomallotments');
+})
+router.post('/room_register',(req,res)=>{
+      console.log(req.session.block_name);
+      var sql = "INSERT INTO room_reg (name,dept,block,floor,room_num) VALUES ('"+req.session.user_name+"', '"+req.session.dept_name+"','"+req.session.block_name+"','"+req.session.floor_name+"','"+req.session.room_name+"')";
+      con.query(sql, function (err, result) {
+        if (err) throw err;  
+        if(result){
+          console.log('1 record inserted');
+          res.send(`<script>window.alert('Room registered successfully');window.location.href='/roomallotments';</script>`);
+        }
+        else{
+          res.send(`<script>window.alert('Room register failed');window.location.href='/roomallotments';</script>`);
+        }
+      });
+})
+
+router.get('/roomallotments',function(req,res){
+  res.render('Roomallotments',{rooms1,room_num,room_name});
+})
+
 
 app.use('/',router);
 app.listen(port,()=>{
