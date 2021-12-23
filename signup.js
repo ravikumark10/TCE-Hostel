@@ -12,6 +12,7 @@ app.use(express.static('images'));
 app.use(express.static('image'));
 app.use(express.static('Style'));
 app.use(express.static('javascript'));
+
 const port=5050;
 const session=require('express-session');
 const { Script } = require("vm");
@@ -22,11 +23,12 @@ app.set('view engine','hbs');
 app.set('views','./views');
 app.use(express.static('views'));
 
+app.set('trust proxy', 1) // trust first proxy
 app.use(session({
-  secret: 'keyboard cat',
+  secret: 'secret',
   resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true }
+  saveUninitialized: false,
+  //cookie: { secure: true }
 }))
 
 
@@ -50,12 +52,11 @@ router.get('/index',function(req,res){
   res.sendFile(path.join(__dirname+'/index.html'));
 });
 
+
 router.post('/submit',function(req,res){
   var name=req.body.name;
-  req.session.user_name=name;
   var email=req.body.email;
   var dept=req.body.dept;
-  req.session.dept_name=dept;
   var password=req.body.password;
   var c_password=req.body.c_password;
   var sql = "INSERT INTO signup (name,email,dept,password,c_password) VALUES ('"+name+"', '"+email+"','"+dept+"','"+password+"','"+c_password+"')";
@@ -72,7 +73,8 @@ router.get('/login',function(req,res){
   res.sendFile(path.join(__dirname+'/login.html'));
 });
 
-
+global.user_name="";
+global.user_dept="";
 router.post('/loginsubmit',function(req,res){
   var email=req.body.email;
   var password=req.body.password;
@@ -80,6 +82,8 @@ router.post('/loginsubmit',function(req,res){
     if (err) throw err;
     result1=result;
     if (result1.length>0){
+       user_name = result[0].name;
+       user_dept = result[0].dept;
       if (result1[0].password==password){
         res.redirect('/mainpage');
       }
@@ -88,6 +92,7 @@ router.post('/loginsubmit',function(req,res){
       }
     }
   });
+
   con.query("SELECT * FROM admin where email=?",[email],function(err,result){
     if (err) throw err;
     result2=result;
@@ -103,7 +108,7 @@ router.post('/loginsubmit',function(req,res){
     }
   });
 });
-console.log(result1);
+
 var menu=[];
   var sql = "select * from mess";
   con.query(sql, function (err, result) {
@@ -147,8 +152,9 @@ router.get('/attendance',function(req,res){
 })
 
 router.get('/messmenu',function(req,res){
-  res.sendFile(path.join(__dirname+'/messmenu.html'));
+    res.sendFile(path.join(__dirname+'/messmenu.html'));
 })
+
 
 router.get('/Discussionforum',function(req,res){
   res.sendFile(path.join(__dirname+'/Discussionforum.html'));
@@ -194,14 +200,15 @@ router.get('/home',(req,res)=>{
 })
 
 //Room allotments
-
+global.block_name="";
+global.floor_name="";
 global.rooms1=[];
 router.post('/room_check',(req,res)=>{
   var rooms=[];
   var block=req.body.block;
-  req.session.block_name=block;
+  block_name=block;
   var floor=req.body.floor;
-  req.session.floor_name=floor;
+  floor_name=floor;
   if(floor=='Ground'){
     for(var i=1;i<=10;i++){
       rooms.push(block+'-'+i);
@@ -226,14 +233,13 @@ global.room_name="";
 router.post('/room_select',(req,res)=>{
   var rooms=[1,2,3,4];
   var room=req.body.room;
-  req.session.room_name=room;
   room_num=rooms;
   room_name=room;
   res.redirect('/roomallotments');
 })
 router.post('/room_register',(req,res)=>{
-      console.log(req.session.block_name);
-      var sql = "INSERT INTO room_reg (name,dept,block,floor,room_num) VALUES ('"+req.session.user_name+"', '"+req.session.dept_name+"','"+req.session.block_name+"','"+req.session.floor_name+"','"+req.session.room_name+"')";
+      console.log("Hello World");
+      var sql = "INSERT INTO room_reg(name,dept,block,floor,room_num) VALUES ('"+user_name+"', '"+user_dept+"','"+block_name+"','"+floor_name+"','"+room_name+"')";
       con.query(sql, function (err, result) {
         if (err) throw err;  
         if(result){

@@ -30,7 +30,7 @@
             column-gap: 20px;
             row-gap: 20px;
             padding: 10px;
-            width: 100px;
+            width: 600px;
             margin: 20px;
         }
         .grid-item{
@@ -72,6 +72,12 @@
             font-size: 30px;
             font-weight: bolder;
         }
+        h4{
+            font-size: 30px;
+            font-weight: bolder;
+            color: black;
+            padding: 20px;
+        }
 
     </style>
     <body ng-app="myApp" ng-controller="firstCtrl">
@@ -79,7 +85,7 @@
             <img src="logo.png">
             <h2>TCE Hostel</h2>
         </header>
-        
+     <center><h4>Room Registration</h4> </center>   
     <div  class="container mt-5">  
         <form action="/room_check" method="post">
             <div  class="col-sm-2">  
@@ -121,7 +127,7 @@
             <button type="submit" value="submit" class="btn btn-primary">Select</button>
         </form>          
     </div><br>
-    <form action="/room_register" method="post"></form>
+    <form action="/room_register" method="post">
      <div class="grid-container1" >
              <h3>{{room_name}}</h3><br>
             {{#each room_num}}
