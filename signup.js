@@ -1,5 +1,6 @@
 var express = require("express");
 var app     = express();
+const nodemailer=require('nodemailer');
 var path    = require("path");
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
@@ -22,6 +23,29 @@ app.engine('hbs', engine({extname:'.hbs'}));
 app.set('view engine','hbs');
 app.set('views','./views');
 app.use(express.static('views'));
+
+hbs.registerHelper('ifcheck', (x,op,y,options)=> {
+  switch(op){
+      case '>':
+          return (x>y) ? options.fn(this) : options.inverse(this);
+      case '<':
+          return (x<y) ? options.fn(this) : options.inverse(this);
+      case '==':
+          return (x==y) ? options.fn(this) : options.inverse(this);
+      case '!=':
+          return (x!=y) ? options.fn(this) : options.inverse(this);
+      default:
+          return options.inverse(this);
+  }
+})
+hbs.registerHelper('ifIn',function(elem,list,options){
+  if(list.indexOf(elem)>-1){
+      return options.fn(this);
+  }
+ else{
+  return options.inverse(this);
+ }
+});
 
 app.set('trust proxy', 1) // trust first proxy
 app.use(session({
@@ -75,6 +99,8 @@ router.get('/login',function(req,res){
 
 global.user_name="";
 global.user_dept="";
+global.user_email="";
+global.user_id=""
 router.post('/loginsubmit',function(req,res){
   var email=req.body.email;
   var password=req.body.password;
@@ -84,6 +110,8 @@ router.post('/loginsubmit',function(req,res){
     if (result1.length>0){
        user_name = result[0].name;
        user_dept = result[0].dept;
+       user_email =result[0].email;
+       user_id=result[0].id;
       if (result1[0].password==password){
         res.redirect('/mainpage');
       }
@@ -118,34 +146,40 @@ var menu=[];
 });
 
 
-  var sql1= "select sno,day,breakfast from mess";
-  con.query(sql1, function (err, result) {
-    if (err) throw err;
-    breakfast=result;
-  });
-  var sql2= "select sno,day,lunch from mess";
-  con.query(sql2, function (err, result) {
-    if (err) throw err;
-    lunch=result;
-  });
-  var sql3= "select sno,day,dinner from mess";
-  con.query(sql3, function (err, result) {
-    if (err) throw err;
-    dinner=result;
-  });
+ 
+
+  
 
 router.get('/mess',function(req,res){
     res.send(menu);
 });
 router.get('/breakfast',function(req,res){
+  var sql1= "select sno,day,breakfast from mess";
+  con.query(sql1, function (err, result) {
+    if (err) throw err;
+    breakfast=result;
     res.send(breakfast);
+  });
+    
 
 });
 router.get('/lunch',function(req,res){
+  var sql2= "select sno,day,lunch from mess";
+  con.query(sql2, function (err, result) {
+    if (err) throw err;
+    lunch=result;
     res.send(lunch);
+  });
+    
 });
 router.get('/dinner',function(req,res){
+  var sql3= "select sno,day,dinner from mess";
+  con.query(sql3, function (err, result) {
+    if (err) throw err;
+    dinner=result;
     res.send(dinner);
+  });
+    
 });
 router.get('/attendance',function(req,res){
   res.sendFile(path.join(__dirname+'/attendance.html'));
@@ -203,6 +237,8 @@ router.get('/home',(req,res)=>{
 global.block_name="";
 global.floor_name="";
 global.rooms1=[];
+global.filled=[];
+global.filledbeds=[];
 router.post('/room_check',(req,res)=>{
   var rooms=[];
   var block=req.body.block;
@@ -224,25 +260,40 @@ router.post('/room_check',(req,res)=>{
     }
   }
   rooms1=rooms;
+ 
   res.redirect('/roomallotments');
   console.log(rooms1);
 })
 
 global.room_num=[];
 global.room_name="";
+global.c=0;
 router.post('/room_select',(req,res)=>{
   var rooms=[1,2,3,4];
-  var room=req.body.room;
+  var room= req.body.room;
+  console.log(room[0][0]);
   room_num=rooms;
   room_name=room;
+  con.query("select count(*) as c from room_reg where block=? and room_num=?",[room[0][0],room_name],(err,result)=>{
+    if (err) throw err;
+    console.log(result[0].c);
+  c=result[0].c;
+  filledbeds=[]
+  for (let i=0;i<parseInt(c);i++){
+    filledbeds.push(i+1);
+  }
+    })
   res.redirect('/roomallotments');
 })
 router.post('/room_register',(req,res)=>{
+
       console.log("Hello World");
       var sql = "INSERT INTO room_reg(name,dept,block,floor,room_num) VALUES ('"+user_name+"', '"+user_dept+"','"+block_name+"','"+floor_name+"','"+room_name+"')";
       con.query(sql, function (err, result) {
         if (err) throw err;  
         if(result){
+          filledbeds=[]
+          room_num=[]
           console.log('1 record inserted');
           res.send(`<script>window.alert('Room registered successfully');window.location.href='/roomallotments';</script>`);
         }
@@ -253,10 +304,101 @@ router.post('/room_register',(req,res)=>{
 })
 
 router.get('/roomallotments',function(req,res){
-  res.render('Roomallotments',{rooms1,room_num,room_name});
+console.log(filledbeds)
+  res.render('Roomallotments',{filledbeds,c,rooms1,room_num,room_name});
 })
 
+router.post('/complaintsubmit',function(req,res){
+  var {name,reg_no,complaint}=req.body;
+  console.log(user_email)
+con.query("INSERT into complaints(name,reg_no,complaint,userid) values(?,?,?,?)",[name,reg_no,complaint,user_id],(err,result)=>{
+  if (err) throw err;
+  console.log(result)
+  if(result){
+    console.log("Complaint Raised");
+    var returncontent=`<p>Hello ${user_name}, We have received your Complaint.We will resolve it very soon.<br>Thank you<br> TCE Hostel.</p>`
+ let transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true, // true for 465, false for other ports
+  auth: {
+    user: "tcehostel123@gmail.com", // generated ethereal user
+    pass: "tce12345", // generated ethereal password
+  },
+  tls:{
+      rejectUnauthorized:false
+  }
+});
+let mailoptions = {
+  from: '"TCE Hostel" <tcehostel123@gmail.com>',
+  to: user_email,
+  subject: "Complaint Raised",
+  html: returncontent,
+};
 
+transporter.sendMail(mailoptions,(err, info)=>{
+    if (err){
+        console.log(err)
+    }
+    else{
+    console.log('Message Sent');
+    res.write("<script> window.alert('Complaint raised sucessfully...');window.location.href='/Mainpage'</script>")
+    }
+})
+  }
+})
+})
+router.post('/solve',(req,res)=>{
+  var id= req.body.id;
+  con.query("update complaints set status='noted' where id=?",[id],(err,result1)=>{
+    if (err) throw err;
+   con.query("select userid from complaints where id=?",[id],(err,result2)=>{
+     if (err) throw err;
+     con.query("select email from signup where id=?",[result2[0].userid],(err,result3)=>{
+       if (err) throw err;
+       var returncontent=`<p>Hello ${user_name}, your complaint has been sent to the management.your issue will be solved soon<br>Thank you<br> TCE Hostel.</p>`
+       let transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true, // true for 465, false for other ports
+        auth: {
+          user: "tcehostel123@gmail.com", // generated ethereal user
+          pass: "tce12345", // generated ethereal password
+        },
+        tls:{
+            rejectUnauthorized:false
+        }
+      });
+      let mailoptions = {
+        from: '"TCE Hostel" <tcehostel123@gmail.com>',
+        to: result3[0].email,
+        subject: "Complaint under process",
+        html: returncontent,
+      };
+      
+      transporter.sendMail(mailoptions,(err, info)=>{
+          if (err){
+              console.log(err)
+          }
+          else{
+          console.log('Message Sent');
+          res.write("<script> window.alert('Mail sent to user...');window.location.href='/adminhome'</script>")
+          }
+      })
+        
+
+     })
+   })
+  })
+})
+router.get('/viewcomplaint',(req,res)=>{
+  res.sendFile(path.join(__dirname+'/viewcomplaint.html'))
+})
+router.get('/comp',(req,res)=>{
+con.query("select * from complaints where status='unsolved'",(err,result)=>{
+  res.send(result);
+})
+})
 app.use('/',router);
 app.listen(port,()=>{
   console.log(`Running at Port ${port}`);

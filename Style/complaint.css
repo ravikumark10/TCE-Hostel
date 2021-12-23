@@ -24,7 +24,7 @@
         height: 100px;
     }
     .a1{
-        height: 300px;
+        height: 430px;
         text-align: left;
         border: 3px solid #003380;
         width:400px;
@@ -42,7 +42,7 @@
         color:cornsilk;
         text-align: left;
         margin:-10px;
-        height: 20px;
+        height: 30px;
         
     }
     .b1{
@@ -92,9 +92,7 @@ section div{
     padding: 50px;
     text-align: center;
 }
-a{
-color: black;
-}
+
 
 #nav1{
 width: 150px;

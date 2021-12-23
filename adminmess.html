@@ -2,13 +2,27 @@
 <html>
     <head>
         <link rel="stylesheet" href="adminmess.css">
-        
+        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     </head>
     <body ng-app="hms">
         <header>
             <img src="logo.PNG">
             <h2>TCE Hostel</h2>
         </header>
+        <nav class="navbar navbar-expand-lg " style="margin-left: 0px;height:40px;padding-left: 0px;background-color: rgb(108, 108, 247);" >
+            <ul class="navbar-nav" >
+              <li class="nav-item " >
+                <a class="nav-link text-white" href="/adminhome">Home </a>
+              </li>
+              <li class="nav-item" >
+                <a class="nav-link text-white" href="">About us</a>
+              </li>
+              <li class="nav-item" >
+                <a class="nav-link text-white" href= "/login">Logout</a>
+              </li>
+            </ul>
+        </nav>
         <section>
             <h2>Mess Food menu</h2>
             <center>
@@ -28,61 +42,64 @@
                     <input name="foodname" placeholder="Enter Food name"><br><br>
                     <button type="submit" name="submit" value="submit">Update</button>
                 </form>
-            
-           <br><br><br>
-            <div  ng-controller="breakfast as breakfast">
-                <button ng-click="breakfast.change()"> Breakfast</button>
-                <table ng-show="breakfast.value">
-                    <tr id="tablehead">
-                        <th>Day</th>
-                        <th>Breakfast</th>
-                    </tr>
-                        <tr ng-repeat="x in breakfast.food">
-                            <td>{{x.day}}</td>
-                            <td>{{x.breakfast}}</td>
+                </center>
+           <br>
+           <center>
+            <div style="margin-left:180px">
+                <div  ng-controller="breakfast as breakfast">
+                    <button ng-click="breakfast.change()"> Breakfast</button>
+                    <table ng-show="breakfast.value">
+                        <tr id="tablehead">
+                            <th>Day</th>
+                            <th>Breakfast</th>
                         </tr>
-                </table>
-                <br><br>
+                            <tr ng-repeat="x in breakfast.food">
+                                <td>{{x.day}}</td>
+                                <td>{{x.breakfast}}</td>
+                            </tr>
+                    </table>
+                    <br><br>
+                    
+                    </div>
                 
+    
+                <div  ng-controller="lunch as lunch" >
+                    <button ng-click="lunch.change()"> Lunch</button>
+                    
+                    <table ng-show="lunch.value">
+                        <tr id="tablehead">
+                            <th>Day</th>
+                            <th>Breakfast</th>
+                        </tr>
+                        <tr ng-repeat="x in lunch.food">
+                            <td>{{x.day}}</td>
+                            <td>{{x.lunch}}</td>
+                       
+                        </tr>
+                    </table>
+                    <br><br>
+                    
+                </div>
+                <div  ng-controller="dinner as dinner">
+                    <button ng-click="dinner.change()"> Dinner</button>
+                    <table ng-show="dinner.value">
+                        <tr id="tablehead">
+                            <th>Day</th>
+                            <th>Breakfast</th>
+                        </tr>
+                        <tr ng-repeat="x in dinner.food">
+                            <td>{{x.day}}</td>
+                            <td>{{x.dinner}}</td>
+                       
+                        </tr>
+                    </table>
+                    <br><br>
                 </div>
             </div>
-
-            <div  ng-controller="lunch as lunch" >
-                <button ng-click="lunch.change()"> Lunch</button>
-                
-                <table ng-show="lunch.value">
-                    <tr id="tablehead">
-                        <th>Day</th>
-                        <th>Breakfast</th>
-                    </tr>
-                    <tr ng-repeat="x in lunch.food">
-                        <td>{{x.day}}</td>
-                        <td>{{x.lunch}}</td>
-                   
-                    </tr>
-                </table>
-                <br><br>
-                
-            </div>
-            <div  ng-controller="dinner as dinner">
-                <button ng-click="dinner.change()"> Dinner</button>
-                <table ng-show="dinner.value">
-                    <tr id="tablehead">
-                        <th>Day</th>
-                        <th>Breakfast</th>
-                    </tr>
-                    <tr ng-repeat="x in dinner.food">
-                        <td>{{x.day}}</td>
-                        <td>{{x.dinner}}</td>
-                   
-                    </tr>
-                </table>
-                <br><br>
-                
-            </div>
-        
-                
-        </center>
+           </center>
+          
+            
+    
         </section>
 
     </body>

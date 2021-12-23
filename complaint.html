@@ -4,15 +4,30 @@
     <script src="angular.min.js"></script>
     <script src="complaint.js"></script>
     <link rel="stylesheet" href="complaint.css">
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <head >
-    <div class="c1">
-          <link rel="stylesheet" href="main.css">  
+   
+          
     </head>
     <body>
         <header>
             <img src="logo.png">
             <h2>TCE Hostel</h2>
         </header>
+        <nav class="navbar navbar-expand-lg " style="margin-left: 0px;height:40px;padding-left: 0px;background-color: rgb(108, 108, 247);" >
+            <ul class="navbar-nav" >
+              <li class="nav-item " >
+                <a class="nav-link text-white" href="/Mainpage">Home </a>
+              </li>
+              <li class="nav-item" >
+                <a class="nav-link text-white" href="">About us</a>
+              </li>
+              <li class="nav-item" >
+                <a class="nav-link text-white" href= "login">Logout</a>
+              </li>
+            </ul>
+        </nav>
     </div>
 </head>
 <body>
@@ -20,19 +35,22 @@
         <div class="a0">
             <h4>Complaint Box</h4>
         </div><br>
-        <form>
+        <form action="/complaintsubmit" method="POST">
             <label><b> Name:</b></label><br>
-            <input type ="text" ><br>
+            <input type ="text" name="name" ><br>
             <label><b>Register Number:</b></label><br>
-            <input type ="text" ><br>
+            <input type ="text" name="reg_no" ><br>
             <label ><b>Complaint:</b></label><br>
             <div ng-controller = 'eventController'>
-                <textarea ng-keypress="length(msg);" ng-model="msg" maxlength={{total}} cols="30" rows="5">
+                <textarea ng-keypress="length(msg);" ng-model="msg" name="complaint" maxlength={{total}} cols="30" rows="5">
                 </textarea> <br>
                 ({{total-msg.length}} words only allowed)
                 {{res}}
             </div>
             <button class="b1"><b>Submit</b></button>
         </form>
+        
     </div>
+  
+ 
 </body>
